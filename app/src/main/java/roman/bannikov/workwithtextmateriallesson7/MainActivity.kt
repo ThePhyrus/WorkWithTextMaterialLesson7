@@ -8,6 +8,7 @@ import android.text.Html
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.SpannedString
+import android.text.style.AbsoluteSizeSpan
 import android.text.style.BulletSpan
 import android.text.style.ForegroundColorSpan
 import androidx.core.content.ContextCompat
@@ -20,8 +21,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.tvText.typeface =
-            Typeface.createFromAsset(this@MainActivity.assets, "fonts/ColumbiaRandomBoldItalic.ttf")
+//        binding.tvText.typeface =
+//            Typeface.createFromAsset(this@MainActivity.assets, "fonts/ColumbiaRandomBoldItalic.ttf")
         binding.tvGreetingText.typeface =
             Typeface.createFromAsset(this@MainActivity.assets, "fonts/DeCAPitatedMedium.ttf")
 
@@ -37,13 +38,12 @@ class MainActivity : AppCompatActivity() {
         //забыли пример из прошлого))
 
         // по современному:
-        val textSpannable = "My text \nbullet one \nbullet two"
-        val flag = SpannableString.SPAN_EXCLUSIVE_EXCLUSIVE
+        val textSpannable = resources.getString(R.string.the_text)
+        val flag = SpannableString.SPAN_INCLUSIVE_INCLUSIVE
         val bulletRadius = 10
 
-
         spannableString = SpannableString(textSpannable)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+/*        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
             spannableString.setSpan(
                 BulletSpan(10, ContextCompat.getColor(this, R.color.mr_bullet_color),bulletRadius),
                 9,
@@ -69,20 +69,36 @@ class MainActivity : AppCompatActivity() {
                 spannableString.length,
                 flag
             )
-        }
+        }*/
 
-/*        spannableString.setSpan(
-            ForegroundColorSpan(ContextCompat.getColor(this, R.color.mr_bullet_color)),
-            9,
-            19,
+       spannableString.setSpan(
+            ForegroundColorSpan(ContextCompat.getColor(this, R.color.mr_text_color_black)),
+            0,
+            5,
+            flag
+        )
+
+        spannableString.setSpan(
+            ForegroundColorSpan(ContextCompat.getColor(this, R.color.mr_text_color_green)),
+            6,
+            52,
             flag
         )
         spannableString.setSpan(
-            ForegroundColorSpan(ContextCompat.getColor(this, R.color.mr_bullet_color)),
-            21,
+            ForegroundColorSpan(ContextCompat.getColor(this, R.color.mr_text_color_black)),
+            53,
             spannableString.length,
             flag
-        )*/
+        )
+
+
+
+        val startIndex = 0
+        val endIndex = spannableString.length
+        val fontSizeInPx = 14
+        val isUnitInDp = true
+        spannableString.setSpan(AbsoluteSizeSpan(fontSizeInPx, isUnitInDp), startIndex, endIndex, flag)
+
 
         binding.tvText.text = spannableString
     }

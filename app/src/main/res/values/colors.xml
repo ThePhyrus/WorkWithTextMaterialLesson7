@@ -9,5 +9,8 @@
     <color name="white">#FFFFFFFF</color>
 
 <!--    Mr.Color-->
-    <color name="mr_bullet_color">#629700</color>
+    <color name="mr_bullet_color">#002197</color>
+    <color name="mr_text_color_red">#970000</color>
+    <color name="mr_text_color_green">#629700</color>
+    <color name="mr_text_color_black">#000000</color>
 </resources>
