@@ -12,7 +12,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         binding.tvText.typeface = Typeface.createFromAsset(this@MainActivity.assets, "fonts/ColumbiaRandomBoldItalic.ttf")
         binding.tvGreetingText.typeface = Typeface.createFromAsset(this@MainActivity.assets, "fonts/DeCAPitatedMedium.ttf")
     }
