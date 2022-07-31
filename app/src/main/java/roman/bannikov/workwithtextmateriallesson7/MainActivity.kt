@@ -122,8 +122,8 @@ class MainActivity : AppCompatActivity() {
         )
 
 
+        spannedString = SpannedString(spannableStringBuilder)
 
-
-        binding.tvText.text = spannableStringBuilder
+        binding.tvText.text = spannedString
     }
 }
