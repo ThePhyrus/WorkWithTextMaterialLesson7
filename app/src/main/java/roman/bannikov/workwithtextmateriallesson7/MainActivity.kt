@@ -8,9 +8,7 @@ import android.text.Html
 import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.SpannedString
-import android.text.style.AbsoluteSizeSpan
-import android.text.style.BulletSpan
-import android.text.style.ForegroundColorSpan
+import android.text.style.*
 import androidx.core.content.ContextCompat
 import roman.bannikov.workwithtextmateriallesson7.databinding.ActivityMainBinding
 
@@ -21,15 +19,15 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-//        binding.tvText.typeface =
-//            Typeface.createFromAsset(this@MainActivity.assets, "fonts/ColumbiaRandomBoldItalic.ttf")
+        binding.tvText.typeface =
+            Typeface.createFromAsset(this@MainActivity.assets, "fonts/ColumbiaRandomBoldItalic.ttf")
         binding.tvGreetingText.typeface =
             Typeface.createFromAsset(this@MainActivity.assets, "fonts/DeCAPitatedMedium.ttf")
 
         // Инструменты для работы с текстом через span:
         val spannedString: SpannedString //умеет только хранить ссылку на результат работы SpannableString и SpannableStringBuilder
-        val spannableString: SpannableString //умеет менять цвета, применять спэны к тексту, но не умеет добавлять в сторку новые символы или склеивать строки
-        val spannableStringBuilder: SpannableStringBuilder //самый крутой - умеет фсё!
+//        val spannableString: SpannableString //умеет менять цвета, применять спэны к тексту, но не умеет добавлять в сторку новые символы или склеивать строки
+        var spannableStringBuilder: SpannableStringBuilder //самый крутой - умеет фсё!
 
 
         //пример из прошлого:
@@ -39,67 +37,93 @@ class MainActivity : AppCompatActivity() {
 
         // по современному:
         val textSpannable = resources.getString(R.string.the_text)
-        val flag = SpannableString.SPAN_INCLUSIVE_INCLUSIVE
         val bulletRadius = 10
+        spannableStringBuilder = SpannableStringBuilder(textSpannable)
 
-        spannableString = SpannableString(textSpannable)
-/*        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-            spannableString.setSpan(
-                BulletSpan(10, ContextCompat.getColor(this, R.color.mr_bullet_color),bulletRadius),
-                9,
-                19,
-                flag
-            )
-           spannableString.setSpan(
-                BulletSpan(10, ContextCompat.getColor(this, R.color.mr_bullet_color), bulletRadius),
-                21,
-                spannableString.length,
-                flag
-            )
-        } else {
-            spannableString.setSpan(
-                BulletSpan(10, ContextCompat.getColor(this, R.color.mr_bullet_color)),
-                9,
-                19,
-                flag
-            )
-            spannableString.setSpan(
-                BulletSpan(10, ContextCompat.getColor(this, R.color.mr_bullet_color)),
-                21,
-                spannableString.length,
-                flag
-            )
-        }*/
 
-       spannableString.setSpan(
-            ForegroundColorSpan(ContextCompat.getColor(this, R.color.mr_text_color_black)),
+
+        spannableStringBuilder.setSpan(
+            RelativeSizeSpan(1.5f),
             0,
             5,
-            flag
+            SpannableStringBuilder.SPAN_INCLUSIVE_INCLUSIVE
         )
 
-        spannableString.setSpan(
+        spannableStringBuilder.setSpan(
+            UnderlineSpan(),
+            0,
+            5,
+            SpannableStringBuilder.SPAN_INCLUSIVE_INCLUSIVE
+        )
+
+        spannableStringBuilder.delete(12, 13)
+
+        spannableStringBuilder.insert(12, "инского слова")
+
+        spannableStringBuilder.setSpan(
+            UnderlineSpan(),
+            26,
+            33,
+            SpannableStringBuilder.SPAN_EXCLUSIVE_INCLUSIVE
+        )
+
+
+        spannableStringBuilder.setSpan(
+            ForegroundColorSpan(ContextCompat.getColor(this, R.color.mr_text_color_black)),
+            0,
+            spannableStringBuilder.length,
+            SpannableStringBuilder.SPAN_INCLUSIVE_INCLUSIVE
+        )
+
+        spannableStringBuilder.setSpan(
             ForegroundColorSpan(ContextCompat.getColor(this, R.color.mr_text_color_green)),
             6,
-            52,
-            flag
+            66,
+            SpannableStringBuilder.SPAN_EXCLUSIVE_INCLUSIVE
         )
-        spannableString.setSpan(
+
+        spannableStringBuilder.setSpan(
             ForegroundColorSpan(ContextCompat.getColor(this, R.color.mr_text_color_black)),
-            53,
-            spannableString.length,
-            flag
+            26,
+            33,
+            SpannableStringBuilder.SPAN_EXCLUSIVE_INCLUSIVE
+        )
+
+        spannableStringBuilder.setSpan(
+            RelativeSizeSpan(1.5f),
+            26,
+            33,
+            SpannableStringBuilder.SPAN_INCLUSIVE_INCLUSIVE
+        )
+
+
+// API 28 or below
+
+        val color = ContextCompat.getColor(this, R.color.mr_bullet_color)
+        spannableStringBuilder.setSpan(
+            BulletSpan(5, color),
+            36,
+            spannableStringBuilder.length,
+            0
+        )
+
+        spannableStringBuilder.setSpan(
+            BulletSpan(5, color),
+            44,
+            spannableStringBuilder.length,
+            0
+        )
+
+        spannableStringBuilder.setSpan(
+            BulletSpan(5, color),
+            56,
+            spannableStringBuilder.length,
+            0
         )
 
 
 
-        val startIndex = 0
-        val endIndex = spannableString.length
-        val fontSizeInPx = 14
-        val isUnitInDp = true
-        spannableString.setSpan(AbsoluteSizeSpan(fontSizeInPx, isUnitInDp), startIndex, endIndex, flag)
 
-
-        binding.tvText.text = spannableString
+        binding.tvText.text = spannableStringBuilder
     }
 }
