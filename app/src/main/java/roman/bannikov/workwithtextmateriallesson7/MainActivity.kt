@@ -46,7 +46,6 @@ class MainActivity : AppCompatActivity() {
         spannableStringBuilder = binding.tvText.text as SpannableStringBuilder
         //при такой записи TextView перерисовываться не будет. Круто, но могут быть утечки памяти!!!
 
-
         val bulletRadius = 10
 //        spannableStringBuilder = SpannableStringBuilder(textSpannable)
 
