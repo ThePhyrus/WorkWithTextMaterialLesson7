@@ -9,6 +9,7 @@ import android.text.SpannableString
 import android.text.SpannableStringBuilder
 import android.text.SpannedString
 import android.text.style.*
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import roman.bannikov.workwithtextmateriallesson7.databinding.ActivityMainBinding
 
@@ -27,7 +28,6 @@ class MainActivity : AppCompatActivity() {
         // Инструменты для работы с текстом через span:
         val spannedString: SpannedString //умеет только хранить ссылку на результат работы SpannableString и SpannableStringBuilder
 //        val spannableString: SpannableString //умеет менять цвета, применять спэны к тексту, но не умеет добавлять в сторку новые символы или склеивать строки
-        var spannableStringBuilder: SpannableStringBuilder //самый крутой - умеет фсё!
 
 
         //пример из прошлого:
@@ -37,10 +37,18 @@ class MainActivity : AppCompatActivity() {
 
         // по современному:
         val textSpannable = resources.getString(R.string.the_text)
+
+
+        //при такой записи TextView перерисовываться не будет. Круто, но могут быть утечки памяти!!!
+        var spannableStringBuilder: SpannableStringBuilder =
+            SpannableStringBuilder(textSpannable)//самый крутой - умеет фсё!
+        binding.tvText.setText(spannableStringBuilder, TextView.BufferType.EDITABLE)
+        spannableStringBuilder = binding.tvText.text as SpannableStringBuilder
+        //при такой записи TextView перерисовываться не будет. Круто, но могут быть утечки памяти!!!
+
+
         val bulletRadius = 10
-        spannableStringBuilder = SpannableStringBuilder(textSpannable)
-
-
+//        spannableStringBuilder = SpannableStringBuilder(textSpannable)
 
         spannableStringBuilder.setSpan(
             RelativeSizeSpan(1.5f),
@@ -66,7 +74,6 @@ class MainActivity : AppCompatActivity() {
             33,
             SpannableStringBuilder.SPAN_EXCLUSIVE_INCLUSIVE
         )
-
 
         spannableStringBuilder.setSpan(
             ForegroundColorSpan(ContextCompat.getColor(this, R.color.mr_text_color_black)),
@@ -122,8 +129,5 @@ class MainActivity : AppCompatActivity() {
         )
 
 
-        spannedString = SpannedString(spannableStringBuilder)
-
-        binding.tvText.text = spannedString
     }
 }
