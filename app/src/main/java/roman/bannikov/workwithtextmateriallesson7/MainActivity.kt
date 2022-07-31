@@ -38,7 +38,6 @@ class MainActivity : AppCompatActivity() {
         // по современному:
         val textSpannable = resources.getString(R.string.the_text)
 
-
         //при такой записи TextView перерисовываться не будет. Круто, но могут быть утечки памяти!!!
         var spannableStringBuilder: SpannableStringBuilder =
             SpannableStringBuilder(textSpannable)//самый крутой - умеет фсё!
